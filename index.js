@@ -13,11 +13,21 @@ const typeDefs = gql`
     vip: Boolean
   }
 
+  # Produto
+  type Produto {
+    id: ID!
+    nome: String!
+    preco: Float!
+    desconto: Float
+    precoComDesconto: Float
+  }
+
   # Pontos de entrada da API
   type Query {
     ola: String!
     horaAtual: Date!
     usuarioLogado: Usuario # tipo definido acima
+    produtoEmDestaque: Produto
   }
 `;
 
@@ -26,6 +36,11 @@ const resolvers = {
     // Resolvendo o nome do atributo, poderia ser mapper etc...
     salario(usuario) {
       return usuario.salario_real;
+    }
+  },
+  Produto: {
+    precoComDesconto(produto) {
+      return produto.preco - produto.preco * produto.desconto;
     }
   },
   Query: {
@@ -43,6 +58,15 @@ const resolvers = {
         idade: 10,
         salario_real: 20000.0,
         vip: true
+      };
+    },
+    produtoEmDestaque() {
+      return {
+        id: 1,
+        nome: "Macbook Pro 16",
+        preco: 12000.0,
+        desconto: 0.15,
+        preco_com_desconto: 12000.0
       };
     }
   }
