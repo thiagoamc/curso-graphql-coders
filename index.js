@@ -9,7 +9,7 @@ const typeDefs = gql`
     nome: String!
     email: String!
     idade: Int
-    Salario: Float
+    salario: Float
     vip: Boolean
   }
 
@@ -22,6 +22,12 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
+  Usuario: {
+    // Resolvendo o nome do atributo, poderia ser mapper etc...
+    salario(usuario) {
+      return usuario.salario_real;
+    }
+  },
   Query: {
     ola() {
       return "Olá Apollo/GraphQL";
@@ -35,7 +41,7 @@ const resolvers = {
         nome: "Mel",
         email: "mel@mel.com",
         idade: 10,
-        salario: 20000.0,
+        salario_real: 20000.0,
         vip: true
       };
     }
